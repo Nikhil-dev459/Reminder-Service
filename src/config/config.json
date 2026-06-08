@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "123SQLmy",
-    "database": "Flights",
+    "database": "REMINDER_DB_DEV",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "timezone": "+05:30"
