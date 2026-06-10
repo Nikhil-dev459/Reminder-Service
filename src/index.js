@@ -11,14 +11,16 @@ app.use(express.urlencoded({extended:true}));   //makes sure to read the url enc
 
 app.use('/api',apiRoutes);
 //const {sendBasicEmail}=require('./services/email-services');
+const jobs=require('./utils/common/cron-jobs');
 
 app.listen(serverConfig.PORT,()=>{
     console.log(`Successfully started the server on PORT : ${serverConfig.PORT}`);
+    jobs();
 
-    sendBasicEmail(
-        /*'support@admin.com',
-        'drnagendra.dwivedi@gmail.com',
+    /*sendBasicEmail(
+        'support@admin.com',
+        'abc@gmail.com',
         'This is a testing mail',
-        'Hello Dr. Nagendra, the flight u booked is in 24 hours, be ready'*/
-    )
+        'Hello, the flight u booked is in 24 hours, be ready'
+    )*/
 });

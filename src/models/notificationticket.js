@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const {Enums}=require('../utils/common');
+const {PENDING,SUCCESS,FAILED}=Enums.NOTIF_STATUS;
 module.exports = (sequelize, DataTypes) => {
   class NotificationTicket extends Model {
     /**
@@ -29,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type:DataTypes.ENUM,
       allowNull:false,
-      values:["PENDING","SUCCESS","FAILED"]
+      values:[PENDING.SUCCESS,FAILED],
+      defaultValue:PENDING
     },
     notificationTime: {
       type:DataTypes.DATE,

@@ -1,5 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+const {Enums}=require('../utils/common');
+const {PENDING,SUCCESS,FAILED}=Enums.NOTIF_STATUS;
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('NotificationTickets', {
@@ -24,7 +26,8 @@ module.exports = {
       status: {
         type: Sequelize.ENUM,
         allowNull:false,
-        values:["PENDING","SUCCESS","FAILED"]
+        values:[PENDING,SUCCESS,FAILED],
+        defaultValue:PENDING
       },
       notificationTime: {
         type: Sequelize.DATE,
