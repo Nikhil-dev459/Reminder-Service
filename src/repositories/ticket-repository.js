@@ -1,5 +1,7 @@
 const {NotificationTicket}=require('../models/index');
 const {Op}=require('sequelize');
+const AppError=require('../utils/error/app-error');
+const {StatusCodes}=require('http-status-codes');
 
 class TicketRepository{
     async getAll(){
@@ -18,7 +20,13 @@ class TicketRepository{
            return ticket; 
         } 
         catch(error){
-           throw error; 
+            if(error.name=='SequelizeValidationError'){
+                const explanation=error.errors.map(
+                    err=>err.message
+                );
+            throw new AppError(explanation,StatusCodes.BAD_REQUEST);
+            }
+            throw error;               
         }
     }
 
@@ -42,6 +50,9 @@ class TicketRepository{
     async update(ticketId,data){
         try{
             const tickets=await NotificationTicket.findByPk(ticketId);
+            if(!tickets){
+                throw new AppError('Notification ticket not found',StatusCodes.NOT_FOUND);
+            }
             if(data.status) tickets.status=data.status;
             await tickets.save();
             return tickets;
